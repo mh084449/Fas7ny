@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="place"
+            type="com.example.fasa7ni.database.Place" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:elevation="4dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="6dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/image"
+                android:src="@drawable/ic_baseline_add_24"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                tools:layout_editor_absoluteX="8dp"
+                app:layout_constraintTop_toTopOf="@id/layout"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/Type"
+                android:text="@{place.type}"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                app:layout_constraintLeft_toLeftOf="@id/layout"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:textSize="14dp"
+                android:layout_marginVertical="4dp"
+                style="bold"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:id="@+id/Name"
+                android:text="@{place.name}"
+                app:layout_constraintTop_toBottomOf="@id/Type"
+                app:layout_constraintLeft_toLeftOf="@id/layout"
+                android:layout_width="wrap_content"
+                android:textSize="12dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginVertical="4dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <RatingBar
+                android:id="@+id/place_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginRight="8dp"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:layout_constraintBottom_toBottomOf="@id/layout"
+                app:layout_constraintRight_toRightOf="@id/layout"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="@{place.nearbyDistance}"
+                android:stepSize="0.1"
+                >
+            </RatingBar>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
