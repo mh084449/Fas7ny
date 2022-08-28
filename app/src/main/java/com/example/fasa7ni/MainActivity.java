@@ -10,6 +10,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.example.fasa7ni.database.Place;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,8 +24,7 @@ public class MainActivity extends AppCompatActivity implements PlaceActions {
 
     private PlaceViewModel placeViewModel;
     private FloatingActionButton toAddPlaceButton;
-    RecyclerViewAdapter recyclerViewAdapter;
-    private Middler middler;
+    AddPlace addPlace;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +34,11 @@ public class MainActivity extends AppCompatActivity implements PlaceActions {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        recyclerViewAdapter = new RecyclerViewAdapter();
+
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter();
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.setPlaceActions(this);
+
 
         placeViewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
         placeViewModel.allPlaces.observe(this, places -> recyclerViewAdapter.setPlaces(places));
@@ -46,19 +51,23 @@ public class MainActivity extends AppCompatActivity implements PlaceActions {
             }
         });
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(AddPlace.EXTRA_MESSAGE);
 
-        if(message == "message"){
-            placeViewModel.insertPlace(middler.savPlace());
+        Intent intent = getIntent();
+        String title = intent.getStringExtra(AddPlace.EXTRA_TITLE);
+        String type = intent.getStringExtra(AddPlace.EXTRA_TYPE);
+        String URI = intent.getStringExtra(AddPlace.EXTRA_URI);
+        double longit = intent.getDoubleExtra(AddPlace.EXTRA_LONGIT,0.0);
+        double lat = intent.getDoubleExtra(AddPlace.EXTRA_LAT,0.0);
+        int rating = intent.getIntExtra(AddPlace.EXTRA_RATING,0);
+
+        if(title != null) {
+            Place place = new Place(title, type, title, longit, lat, rating);
+            place.setUriImage(Uri.parse(URI));
+            placeViewModel.insertPlace(place);
+
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        placeViewModel.allPlaces.observe(this, places -> recyclerViewAdapter.setPlaces(places));
-    }
 
     void setToAddPlaceButton(){
         Intent intent = new Intent(this, AddPlace.class);
@@ -73,5 +82,10 @@ public class MainActivity extends AppCompatActivity implements PlaceActions {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
+    }
+
+    @Override
+    public void onLongItemClick(Place pos) {
+        placeViewModel.deletePlace(pos);
     }
 }

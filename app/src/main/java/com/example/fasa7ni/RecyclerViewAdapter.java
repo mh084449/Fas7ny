@@ -2,6 +2,7 @@ package com.example.fasa7ni;
 
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         public void bind(int pos){
+            placeItemBinding.card.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    placeActions.onLongItemClick(places.get(pos));
+                    return false;
+                }
+            });
             placeItemBinding.card.setOnClickListener(view -> placeActions.onItemClick(places.get(pos)));
         }
     }

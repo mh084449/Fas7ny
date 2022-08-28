@@ -44,9 +44,10 @@ public abstract class PlaceDB extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            Place place = new Place("Kelli","Restaurant","kkk",48.8584,2.2945,4);
-            place.setDrawImage(R.drawable.ic_launcher_foreground);
-            placeDao.insertPlace(place);
+//            Place place = new Place("Eiffel Tower","Land Mark","kkk",48.8584,2.2945,4);
+//            place.setDrawImage(R.drawable.u1nknown);
+//            placeDao.insertPlace(place);
+
             return null;
         }
     }

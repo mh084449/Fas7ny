@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.fasa7ni.R;
+
 @Entity(tableName = "places")
 public class Place {
     @PrimaryKey
@@ -17,7 +19,7 @@ public class Place {
     private double longit;
     private double lat;
     private int nearbyDistance;
-    private int drawImage;
+    private int drawImage = R.drawable.ic_baseline_image_24;
     public String UriImage = "null";
 
     public Place(@NonNull String name, @NonNull String type, String description,double longit,double lat, int nearbyDistance) {
